@@ -15,9 +15,12 @@ var mcTransport = {
 		}else if (data1 == 70 && data2 > 64){
 			println("transport: stop");
 			transport.stop();
-		}else if (data1 == 190 && data2 > 64){
+		}else if (data1 == 59 && data2 > 64){
 			println("transport: record");
 			transport.record();
+		}else if (data1 == 56 && data2 > 64){
+			println("transport: click");
+			transport.toggleClick();
 		}
 	},	
 

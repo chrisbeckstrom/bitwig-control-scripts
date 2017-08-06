@@ -104,7 +104,7 @@ function isUserControlCC(cc) {
 }
 
 function onMidi(status, data1, data2) {
-    // printMidi(status, data1, data2)
+    printMidi(status, data1, data2)
 
     if (isChannelController(status)) {
     
@@ -134,30 +134,31 @@ function onMidi(status, data1, data2) {
     	
  		// TRACK navigation
  		// x-session TOP ROW
-     	if(data1 == 43 && data2 != 0){
+     	if(data1 == 43 && data2 == 127){
  					cursorTrack.selectPrevious();
  					println("previous track");
- 		}  else if(data1 == 45 && data2 != 0){
+ 		}  else if(data1 == 45 && data2 == 127){
 					cursorTrack.selectNext();
  				println("next track");
  		}
  		
  		// DEVICE CHAINS navigation
  		// x-session MIDDLE ROW
-     	if(data1 == 46 && data2 != 0){
+     	if(data1 == 46 && data2 == 127){
  					cursorDevice.selectPrevious();
  					println("previous device chain");
- 		}  else if(data1 == 57 && data2 != 0){
+ 		}  else if(data1 == 57 && data2 == 127){
 					cursorDevice.selectNext();
  					println("next device chain");
  		}
     	
     	// MACRO/REMOTE CONTROL page navigation
     	// x-session BOTTOM row
-    	if(data1 == 58 && data2 != 0){
- 					remoteControls.selectPreviousPage(true);
- 					println("page scroll: previous");
- 		}  else if(data1 == 69 && data2 != 0){
+    	if(data1 == 58 && data2 == 127){
+				println("data1 is 58");
+ 				remoteControls.selectPreviousPage(true);
+ 				println("page scroll: previous");
+ 	}  else if(data1 == 69 && data2 == 127){
  				remoteControls.selectNextPage(true);
  				println("page scroll: next");
  		}
