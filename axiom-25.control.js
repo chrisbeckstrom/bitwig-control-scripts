@@ -20,12 +20,12 @@ var ccToUserIndex = []
 // send a midi note on channel 1 to use these functions
 // NO! use the transport mapping in MyController_functions.js
 var CC = {
-    LOOP: 20,
-    REW: 21,
-    FF: 22,
-    STOP: 44, 
-    PLAY: 43, // toggle
-    REC: 45 // toggle
+//     LOOP: 20,
+//     REW: 21,
+//     FF: 22,
+//     STOP: 70, 
+//     PLAY: 44, // toggle
+//     REC: 45 // toggle
 }
 
 // I don't think we need these anymore, since our page-turning functionlity is in MyController_functions.js
@@ -110,18 +110,18 @@ function onMidi(status, data1, data2) {
     
     	// if we are receiving rotary (macro knob) data
         if (rotaries.isRotary(data1)) {
-        println("rotary data");
-        println(data1);
-        println(data2);
+        //println("rotary data");
+        //println(data1);
+        //println(data2);
         
         rotaries.onMidi(status, data1, data2);
         userControls.getControl(index).set(data2, 128);
         
         } else if (isUserControlCC(data1)) {
         // if we are not receiving rotary (macro knob) data
-        println("control data");
-        println(data1);
-        println(data2);
+        //println("control data");
+        //println(data1);
+        //println(data2);
             var index = ccToUserIndex[data1];
             userControls.getControl(index).set(data2, 128);
             //parameters.pageScroll(data1, data2);
@@ -130,16 +130,38 @@ function onMidi(status, data1, data2) {
     } else {
     	// if we are not receiving macro data OR control data
     	//parameters.pageScroll(data1, data2);
-    	 		if(data1 == 46 && data2 != 0){
- 					//cursorDevice.previousParameterPage();
+    	
+    	
+ 		// TRACK navigation
+ 		// x-session TOP ROW
+     	if(data1 == 43 && data2 != 0){
+ 					cursorTrack.selectPrevious();
+ 					println("previous track");
+ 		}  else if(data1 == 45 && data2 != 0){
+					cursorTrack.selectNext();
+ 				println("next track");
+ 		}
+ 		
+ 		// DEVICE CHAINS navigation
+ 		// x-session MIDDLE ROW
+     	if(data1 == 46 && data2 != 0){
+ 					cursorDevice.selectPrevious();
+ 					println("previous device chain");
+ 		}  else if(data1 == 57 && data2 != 0){
+					cursorDevice.selectNext();
+ 					println("next device chain");
+ 		}
+    	
+    	// MACRO/REMOTE CONTROL page navigation
+    	// x-session BOTTOM row
+    	if(data1 == 58 && data2 != 0){
  					remoteControls.selectPreviousPage(true);
  					println("page scroll: previous");
- 		}  else if(data1 == 57 && data2 != 0){
- 				//cursorDevice.nextParameterPage();
+ 		}  else if(data1 == 69 && data2 != 0){
  				remoteControls.selectNextPage(true);
  				println("page scroll: next");
  		}
-    	
+ 	
 	mcTransport.input(data1, data2);
 	userControls.getControl(index).set(data2, 128);
     	}

@@ -9,13 +9,13 @@ var mcTransport = {
 
 	// set the MIDI notes that control transport here
 	input: function(data1, data2){
-		if (data1 == 43 && data2 > 64){
+		if (data1 == 44 && data2 > 64){
 			println("transport: play");
 			transport.play();
-		}else if (data1 == 44 && data2 > 64){
+		}else if (data1 == 70 && data2 > 64){
 			println("transport: stop");
 			transport.stop();
-		}else if (data1 == 45 && data2 > 64){
+		}else if (data1 == 190 && data2 > 64){
 			println("transport: record");
 			transport.record();
 		}
